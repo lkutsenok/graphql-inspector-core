@@ -35,7 +35,7 @@ function isVoid(a) {
     return typeof a === 'undefined' || a === null;
 }
 function diffArrays(a, b) {
-    return a.filter((c) => !b.some((d) => d === c));
+    return a.filter((c) => !b.some((d) => JSON.stringify(d) === JSON.stringify(c)));
 }
 function compareLists(oldList, newList, callbacks) {
     const oldMap = keyMap(oldList, ({ name }) => name);
@@ -957,6 +957,9 @@ function wordLetterPairs(str) {
 }
 function safeString(obj) {
     if (obj != null && typeof obj.toString === 'function') {
+        if(typeof obj === 'object') {
+            return JSON.stringify(obj);
+        }
         return `${obj}`;
     }
     return inspect(obj);
